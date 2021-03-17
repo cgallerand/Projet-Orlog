@@ -15,7 +15,9 @@ public class Context {
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("orlog");
 	private static Context _instance = null;
 	private IDAOCompte daoCompte = new DAOCompteJPA();
+	//private IDAOCompte daoCompte = new DAOCompteJDBC();
 	private IDAOSort daoSort = new DAOSortJPA();
+	//private IDAOSort daoSort = new DAOSortJDBC();
 
 	// ================================================================
 	// ================================================================
