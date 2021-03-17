@@ -5,31 +5,31 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import dao.IDAOCompte;
-import metier.Compte;
+import dao.IDAOSort;
+import metier.Sort;
 import util.Context;
 
 
-public class DAOCompteJPA implements IDAOCompte {
+public class DAOSortJPA implements IDAOSort {
 
 	@Override
-	public Compte findById(Integer id) {
+	public Sort findById(Integer id) {
 		EntityManager em = Context.getInstance().getEmf().createEntityManager();
-		Compte compte = em.find(Compte.class, id);
+		Sort compte = em.find(Sort.class, id);
 		em.close();
 		return compte;
 	}
 
 	@Override
-	public List<Compte> findAll() {
+	public List<Sort> findAll() {
 		EntityManager em = Context.getInstance().getEmf().createEntityManager();
-		Query myQuery = em.createQuery("SELECT c from Compte c",Compte.class);
+		Query myQuery = em.createQuery("SELECT c from Sort c",Sort.class);
 		 return myQuery.getResultList(); 
 	}
 
 	
 	@Override
-	public Compte save(Compte compte) {
+	public Sort save(Sort compte) {
 		EntityManager em = Context.getInstance().getEmf().createEntityManager();
 		em.getTransaction().begin();
 		
@@ -41,7 +41,7 @@ public class DAOCompteJPA implements IDAOCompte {
 	}
 
 	@Override
-	public void delete(Compte compte) {
+	public void delete(Sort compte) {
 		EntityManager em = Context.getInstance().getEmf().createEntityManager();
 		em.getTransaction().begin();
 		
@@ -53,35 +53,16 @@ public class DAOCompteJPA implements IDAOCompte {
 		
 	}
 
-	@Override
-	public Compte checkConnect(String log, String pass)
-	{ 
-		try {
-		EntityManager em = Context.getInstance().getEmf().createEntityManager();
-		
-		Query query = em.createQuery("from Compte c where c.login= :l and c.password= :p", Compte.class); 
-		query.setParameter("l", log);
-		query.setParameter("p", pass);
-		//getSingleResult si un seul element 
-		return (Compte) query.getSingleResult();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 
-	
-	
 	//Propre au JDBC
 	@Override
-	public void insert(Compte d) {
+	public void insert(Sort d) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(Compte d) {
+	public void update(Sort d) {
 		// TODO Auto-generated method stub
 		
 	}
