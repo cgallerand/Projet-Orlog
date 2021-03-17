@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.IDAO;
+import metier.Sort;
 
 public class DAOSortJDBC implements IDAO<Sort, Integer>{
 
@@ -135,6 +136,12 @@ public class DAOSortJDBC implements IDAO<Sort, Integer>{
 			exc.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public Sort save(Sort object) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
