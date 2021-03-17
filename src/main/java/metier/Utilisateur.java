@@ -12,8 +12,8 @@ public class Utilisateur extends Compte {
 	public Utilisateur() {
 	}
 
-	public Utilisateur(int id, String login, String password, int level) {
-		super(id,login,password);
+	public Utilisateur(String login, String password, int level) {
+		super(login,password);
 		this.level=level;
 	}
 

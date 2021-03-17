@@ -52,11 +52,11 @@ public class Context {
 		this.connected = connected;
 	}
 
+	// ================================================
 	public IDAOCompte getDaoCompte() {
 		return daoCompte;
 	}
 
-	// ================================================
 	public void setDaoCompte(IDAOCompte daoCompte) {
 		this.daoCompte = daoCompte;
 	}

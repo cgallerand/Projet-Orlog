@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -19,18 +20,14 @@ public abstract class Compte {
 	protected int id;
 
 	@Column(nullable = false)
+	@NotEmpty
 	protected String login;
 
 	@Column(nullable = false)
+	@NotEmpty
 	protected String password;
 
 	public Compte() {
-	}
-
-	public Compte(int id, String login, String password) {
-		this.id = id;
-		this.login = login;
-		this.password = password;
 	}
 
 	public Compte(String login, String password) {
