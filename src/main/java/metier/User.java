@@ -4,19 +4,18 @@ import java.util.List;
 
 public class User extends Compte {
 
-	private int id;
 	private boolean ia;
 	private int pointDeVie;
 	private int pointDeSort;
 
 	private List<De> des;
 
-	public User(int id, String login, String password, int level) {
-		super(id, login, password, level);
+	public User() {
+		super();
 	}
 
-	public User(String login, String password, int level) {
-		super(login, password, level);
+	public User(String login, String password) {
+		super(login, password);
 	}
 
 	public User(boolean ia, int pointDeVie, int pointDeSort, List<De> des) {
@@ -27,9 +26,16 @@ public class User extends Compte {
 		this.des = des;
 	}
 
-	public User(int id, boolean ia, int pointDeVie, int pointDeSort, List<De> des) {
-		super();
-		this.id = id;
+	public User(String login, String password, boolean ia, int pointDeVie, int pointDeSort, List<De> des) {
+		super(login, password);
+		this.ia = ia;
+		this.pointDeVie = pointDeVie;
+		this.pointDeSort = pointDeSort;
+		this.des = des;
+	}
+
+	public User(int id, String login, String password, boolean ia, int pointDeVie, int pointDeSort, List<De> des) {
+		super(id, login, password);
 		this.ia = ia;
 		this.pointDeVie = pointDeVie;
 		this.pointDeSort = pointDeSort;

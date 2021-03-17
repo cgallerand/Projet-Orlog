@@ -29,9 +29,8 @@ public class DAOCompteJDBC implements IDAO<Compte, Integer> {
 
 				String log = rs.getString("login");
 				String mdp = rs.getString("password");
-				int lvl = rs.getInt("level");
 
-				compte = new User(log, mdp, lvl);
+				compte = new User(log, mdp);
 			}
 
 			rs.close();
@@ -90,12 +89,10 @@ public class DAOCompteJDBC implements IDAO<Compte, Integer> {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				int id = rs.getInt("id");
 				String log = rs.getString("login");
 				String pass = rs.getString("password");
-				int lvl = rs.getInt("level");
 
-				Compte c = new User(id, log, pass, lvl);
+				Compte c = new User(log, pass);
 				comptes.add(c);
 			}
 			rs.close();
