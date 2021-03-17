@@ -29,9 +29,8 @@ public class DAOCompteJDBC implements IDAO<Compte, Integer> {
 
 				String log = rs.getString("login");
 				String mdp = rs.getString("password");
-				int lvl = rs.getInt("level");
 
-				compte = new User(log, mdp, lvl);
+				compte = new User(log, mdp);
 			}
 
 			rs.close();
