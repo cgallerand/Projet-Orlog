@@ -5,8 +5,10 @@ import javax.persistence.Persistence;
 
 import dao.IDAOCompte;
 import dao.IDAOSort;
+import dao.IDAOUtilisateur;
 import dao.jpa.DAOCompteJPA;
 import dao.jpa.DAOSortJPA;
+import dao.jpa.DAOUtilisateurJPA;
 
 public class Context {
 
@@ -16,6 +18,7 @@ public class Context {
 	//private IDAOCompte daoCompte = new DAOCompteJDBC();
 	private IDAOSort daoSort = new DAOSortJPA();
 	//private IDAOSort daoSort = new DAOSortJDBC();
+	private IDAOUtilisateur daoUtilisateur = new DAOUtilisateurJPA();
 
 	// ================================================================
 	// ================================================================
@@ -55,5 +58,15 @@ public class Context {
 	public void setDaoSort(IDAOSort daoSort) {
 		this.daoSort = daoSort;
 	}
+
+	// ================================================
+	public IDAOUtilisateur getDaoUtilisateur() {
+		return daoUtilisateur;
+	}
+
+	public void setDaoUtilisateur(IDAOUtilisateur daoUtilisateur) {
+		this.daoUtilisateur = daoUtilisateur;
+	}
+	
 
 }
