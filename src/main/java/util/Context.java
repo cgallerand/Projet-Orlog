@@ -16,27 +16,23 @@ import metier.Patient;
 
 
 
-public class Hopital {
+public class Context {
 
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("hopital");
+	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("baseOrlog");
 	private LinkedList<Patient> fileAttente=new LinkedList<Patient>();
 	private Patient lastPatient=null;
 	private Compte connected=null;
-	private static Hopital _instance=null;
+	private static Context _instance=null;
 	private IDAOCompte daoCompte = new DAOCompteJPA();
-	private IDAOPatient daoPatient = new DAOPatientJPA();
-	private IDAOVisite daoVisite = new DAOVisiteJPA();
 //	private IDAOCompte daoCompte = new DAOCompteJDBC();
-//	private IDAOPatient daoPatient = new DAOPatientJDBC();
-//	private IDAOVisite daoVisite = new DAOVisiteJDBC();
 	boolean pause=false;
-	private Hopital() 
-	{	}
 	
+	private Context() 
+	{	}	
 	
-	public static Hopital get_Instance() 
+	public static Context getInstance() 
 	{
-		if(_instance==null) {_instance=new Hopital();}
+		if(_instance==null) {_instance=new Context();}
 		return _instance;
 	}
 	
@@ -85,31 +81,5 @@ public class Hopital {
 		this.daoCompte = daoCompte;
 	}
 	
-	public IDAOPatient getDaoPatient() {
-		return daoPatient;
-	}
-
-
-	public void setDaoPatient(IDAOPatient daoPatient) {
-		this.daoPatient = daoPatient;
-	}
-	
-	public IDAOVisite getDaoVisite() {
-		return daoVisite;
-	}
-
-
-	public void setDaoVisite(IDAOVisite daoVisite) {
-		this.daoVisite = daoVisite;
-	}
-	
-	public boolean isPause() {
-		return pause;
-	}
-
-	public void setPause(boolean pause) {
-		this.pause = pause;
-	}
-
 	
 }
