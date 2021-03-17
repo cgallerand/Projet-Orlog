@@ -18,7 +18,7 @@ import metier.Patient;
 
 public class Context {
 
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("baseOrlog");
+	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("orlog");
 	private LinkedList<Patient> fileAttente=new LinkedList<Patient>();
 	private Patient lastPatient=null;
 	private Compte connected=null;
