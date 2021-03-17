@@ -89,12 +89,10 @@ public class DAOCompteJDBC implements IDAO<Compte, Integer> {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				int id = rs.getInt("id");
 				String log = rs.getString("login");
 				String pass = rs.getString("password");
-				int lvl = rs.getInt("level");
 
-				Compte c = new User(id, log, pass, lvl);
+				Compte c = new User(log, pass);
 				comptes.add(c);
 			}
 			rs.close();
