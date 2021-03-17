@@ -8,41 +8,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.IDAO;
-import dao.IDAOCompte;
 import metier.Compte;
-import metier.Medecin;
-import metier.Secretaire;
+import metier.User;
+import metier.Utilisateur;
 
 
-public class DAOCompteJDBC implements IDAOCompte{
+
+public class DAOCompteJDBC implements IDAO<Compte, Integer>{
 
 	@Override
 	public Compte findById(Integer id) {
-		Compte compte= null;
+		Compte compte = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
-			Connection conn=DriverManager.getConnection(chemin,login,password);
-			PreparedStatement ps = conn.prepareStatement("Select * from compte where id=?");
-			ps.setInt(1,id);
+			Connection conn = DriverManager.getConnection(chemin, login, password);
+			PreparedStatement ps = conn.prepareStatement("Select * from compte where id = ?;");
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 
-			while(rs.next()) 
-			{
-				String login=rs.getString("login");
-				String password=rs.getString("password");
-				String typeCompte=rs.getString("typeCompte");
+			while (rs.next()) {
 
-				switch(typeCompte){
+				String log = rs.getString("login");
+				String mdp = rs.getString("password");
+				int lvl=rs.getInt("level");
 
-				case "medecin" : compte=new Medecin(id,login,password);break;
-				case "secretaire" : compte=new Secretaire(id,login,password);break;
-
-				}
+				compte = new User(log,mdp,lvl);			
 			}
+
 			rs.close();
 			ps.close();
-			conn.close();	
+			conn.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,36 +47,60 @@ public class DAOCompteJDBC implements IDAOCompte{
 		return compte;
 	}
 
+	public Compte findByCompte(String log, String mdp) {
+		Compte cpt = null;
 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(chemin, login, password);
+			PreparedStatement ps = conn.prepareStatement("Select * from compte where login = ? and password = ?");
+			ps.setString(1, log);
+			ps.setString(2, mdp);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				int id = rs.getInt("id");
+				String usercompte = rs.getString("user");
+				int level=rs.getInt("level");
+				if (usercompte.equals("user")) {
+					cpt = new Utilisateur(id, log, mdp,level);
+				}
+
+			}
+
+			rs.close();
+			ps.close();
+			conn.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return cpt;
+	}
 
 	@Override
 	public List<Compte> findAll() {
 		List<Compte> comptes= new ArrayList();
-		Compte compte=null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			Connection conn=DriverManager.getConnection(chemin,login,password);
 			PreparedStatement ps = conn.prepareStatement("Select * from compte");
-			ResultSet rs = ps.executeQuery();
 
+			ResultSet rs = ps.executeQuery();
 
 			while(rs.next()) 
 			{
-				int id=rs.getInt("id");
-				String login=rs.getString("login");
-				String password=rs.getString("password");
-				String typeCompte=rs.getString("typeCompte");
+				int id = rs.getInt("id");
+				String log=rs.getString("login");
+				String pass=rs.getString("password");
+				int lvl=rs.getInt("level");
 
-				switch(typeCompte){
-
-				case "medecin" : compte=new Medecin(id,login,password);break;
-				case "secretaire" : compte=new Secretaire(id,login,password);break;
-
-				}
+				Compte c = new User(id,log,pass,lvl);
+				comptes.add(c);
 			}
-			comptes.add(compte);
-
 			rs.close();
 			ps.close();
 			conn.close();	
@@ -90,118 +111,79 @@ public class DAOCompteJDBC implements IDAOCompte{
 		return comptes;
 	}
 
-
-
 	@Override
-	public void insert(Compte compte) {
+	public void insert(Compte c) {
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
 
 			Connection conn=DriverManager.getConnection(chemin,login,password);
 
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO compte (login,password,typeCompte) VALUES(?,?,?)");
-			ps.setString(1,compte.getLogin());
-			ps.setString(2,compte.getPassword());
-
-			String typeCompte=(compte instanceof Medecin)?"medecin":"secretaire";
-
-			ps.setString(3,typeCompte);
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO compte (login, password, nivau) VALUES(?,?,?);");
+			ps.setString(1, c.getLogin());
+			ps.setString(2, c.getPassword());
+			ps.setInt(3, c.getLevel());
 
 			ps.executeUpdate();
 
 			ps.close();
 			conn.close();
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception exc) {
+			exc.printStackTrace();
 		}
 
 	}
 
 	@Override
-	public void update(Compte compte) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
+	public void update(Compte c) {
 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");			
 
 			Connection conn=DriverManager.getConnection(chemin,login,password);
 
-			PreparedStatement ps = conn.prepareStatement("Update compte set login=?,password=? where id=?");
-
-			ps.setString(1,compte.getLogin());
-			ps.setString(2,compte.getPassword());
-			ps.setInt(3,compte.getId());
+			PreparedStatement ps = conn.prepareStatement("Update compte set login=?,password=?,niveau=?  where id=?");			
+			ps.setString(1, c.getLogin());
+			ps.setString(2, c.getPassword());
+			ps.setInt(3, c.getLevel());
+			ps.setInt(4, c.getId());
 
 			ps.executeUpdate();
 
 			ps.close();
 			conn.close();
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception exc) {
+			exc.printStackTrace();
 		}
+
+
 	}
 
 	@Override
-	public void delete(Compte compte) {
+	public void delete(Compte c) {
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			Connection conn=DriverManager.getConnection(chemin,login,password);
 
 			PreparedStatement ps = conn.prepareStatement("DELETE FROM compte where id=?");
-			ps.setInt(1,compte.getId());
+			ps.setInt(1,c.getId());
 
 			ps.executeUpdate();
 
 			ps.close();
 			conn.close();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-
-	@Override
-	public Compte checkConnect(String log,String pass) {
-		Compte compte= null;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
-			Connection conn=DriverManager.getConnection(chemin,login,password);
-			PreparedStatement ps = conn.prepareStatement("Select * from compte where login=? and password=?");
-			ps.setString(1,log);
-			ps.setString(2,pass);
-			ResultSet rs = ps.executeQuery();
-
-			while(rs.next()) 
-			{
-				int id=rs.getInt("id");
-				String login=rs.getString("login");
-				String password=rs.getString("password");
-				String typeCompte=rs.getString("typeCompte");
-
-				switch(typeCompte){
-
-				case "medecin" : compte=new Medecin(id,login,password);break;
-				case "secretaire" : compte=new Secretaire(id,login,password);break;
-
-				}
-			}
-			rs.close();
-			ps.close();
-			conn.close();	
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception exc) {
+			exc.printStackTrace();
 		}
 
-		return compte;
 	}
 
-
-	//propre au JPA
 	@Override
 	public Compte save(Compte object) {
 		// TODO Auto-generated method stub
