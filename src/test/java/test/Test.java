@@ -10,13 +10,13 @@ import java.util.Scanner;
 import metier.Compte;
 import metier.De;
 import metier.Roll;
-import dao.DAOCompte;
+import dao.jpa.DAOCompteJPA;
 import metier.User;
 
 public class Test {
 
-	static DAOCompte daoCompte= new DAOCompte();
-	static Compte compteConnected;
+	static DAOCompteJPA daoCompte= new DAOCompteJPA();//a enlever
+	static Compte compteConnected;//a enlever
 
 	public static String saisieString(String message) 
 	{
@@ -63,7 +63,7 @@ public class Test {
 
 		String login=saisieString("Saisir votre login");
 		String password=saisieString("Saisir votre password");
-		compteConnected=daoCompte.findByCompte(login,password);
+		compteConnected=daoCompte.checkConnect(login,password);
 
 		if (compteConnected instanceof Compte)
 		{

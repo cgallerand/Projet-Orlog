@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 import dao.IDAOCompte;
 import dao.IDAOSort;
 import dao.jpa.DAOCompteJPA;
+import dao.jpa.DAOSortJPA;
 import metier.Compte;
 
 public class Context {

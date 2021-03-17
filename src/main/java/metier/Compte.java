@@ -11,18 +11,18 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type_compte")
 public abstract class Compte {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int id;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	protected String login;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	protected String password;
-	protected int level;
 
 	public Compte() {
 	}
@@ -33,19 +33,10 @@ public abstract class Compte {
 		this.password = password;
 	}
 
-	public Compte(String login, String password, int level) {
+	public Compte(String login, String password) {
 		super();
 		this.login = login;
 		this.password = password;
-		this.level = level;
-	}
-
-	public Compte(int id, String login, String password, int level) {
-		super();
-		this.id = id;
-		this.login = login;
-		this.password = password;
-		this.level = level;
 	}
 
 	public int getId() {
@@ -72,18 +63,9 @@ public abstract class Compte {
 		this.password = password;
 	}
 
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
 	@Override
 	public String toString() {
 		return "Compte [id=" + id + ", login=" + login + ", password=" + password + "]";
 	}
-
 
 }
