@@ -12,9 +12,7 @@ import metier.Compte;
 import metier.User;
 import metier.Utilisateur;
 
-
-
-public class DAOCompteJDBC implements IDAO<Compte, Integer>{
+public class DAOCompteJDBC implements IDAO<Compte, Integer> {
 
 	@Override
 	public Compte findById(Integer id) {
@@ -31,9 +29,9 @@ public class DAOCompteJDBC implements IDAO<Compte, Integer>{
 
 				String log = rs.getString("login");
 				String mdp = rs.getString("password");
-				int lvl=rs.getInt("level");
+				int lvl = rs.getInt("level");
 
-				compte = new User(log,mdp,lvl);			
+				compte = new User(log, mdp, lvl);
 			}
 
 			rs.close();
@@ -62,9 +60,9 @@ public class DAOCompteJDBC implements IDAO<Compte, Integer>{
 
 				int id = rs.getInt("id");
 				String usercompte = rs.getString("user");
-				int level=rs.getInt("level");
+				int level = rs.getInt("level");
 				if (usercompte.equals("user")) {
-					cpt = new Utilisateur(id, log, mdp,level);
+					cpt = new Utilisateur(id, log, mdp, level);
 				}
 
 			}
@@ -82,28 +80,27 @@ public class DAOCompteJDBC implements IDAO<Compte, Integer>{
 
 	@Override
 	public List<Compte> findAll() {
-		List<Compte> comptes= new ArrayList();
+		List<Compte> comptes = new ArrayList<Compte>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
-			Connection conn=DriverManager.getConnection(chemin,login,password);
+			Connection conn = DriverManager.getConnection(chemin, login, password);
 			PreparedStatement ps = conn.prepareStatement("Select * from compte");
 
 			ResultSet rs = ps.executeQuery();
 
-			while(rs.next()) 
-			{
+			while (rs.next()) {
 				int id = rs.getInt("id");
-				String log=rs.getString("login");
-				String pass=rs.getString("password");
-				int lvl=rs.getInt("level");
+				String log = rs.getString("login");
+				String pass = rs.getString("password");
+				int lvl = rs.getInt("level");
 
-				Compte c = new User(id,log,pass,lvl);
+				Compte c = new User(id, log, pass, lvl);
 				comptes.add(c);
 			}
 			rs.close();
 			ps.close();
-			conn.close();	
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -117,13 +114,12 @@ public class DAOCompteJDBC implements IDAO<Compte, Integer>{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
+			Connection conn = DriverManager.getConnection(chemin, login, password);
 
-			Connection conn=DriverManager.getConnection(chemin,login,password);
-
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO compte (login, password, nivau) VALUES(?,?,?);");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO compte (login, password, niveau) VALUES(?,?,?);");
 			ps.setString(1, c.getLogin());
 			ps.setString(2, c.getPassword());
-			ps.setInt(3, c.getLevel());
+			ps.setInt(3, 1);
 
 			ps.executeUpdate();
 
@@ -140,15 +136,14 @@ public class DAOCompteJDBC implements IDAO<Compte, Integer>{
 	public void update(Compte c) {
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");			
+			Class.forName("com.mysql.jdbc.Driver");
 
-			Connection conn=DriverManager.getConnection(chemin,login,password);
+			Connection conn = DriverManager.getConnection(chemin, login, password);
 
-			PreparedStatement ps = conn.prepareStatement("Update compte set login=?,password=?,niveau=?  where id=?");			
+			PreparedStatement ps = conn.prepareStatement("Update compte set login=?,password=?  where id=?");
 			ps.setString(1, c.getLogin());
 			ps.setString(2, c.getPassword());
-			ps.setInt(3, c.getLevel());
-			ps.setInt(4, c.getId());
+			ps.setInt(3, c.getId());
 
 			ps.executeUpdate();
 
@@ -159,7 +154,6 @@ public class DAOCompteJDBC implements IDAO<Compte, Integer>{
 			exc.printStackTrace();
 		}
 
-
 	}
 
 	@Override
@@ -168,10 +162,10 @@ public class DAOCompteJDBC implements IDAO<Compte, Integer>{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
-			Connection conn=DriverManager.getConnection(chemin,login,password);
+			Connection conn = DriverManager.getConnection(chemin, login, password);
 
 			PreparedStatement ps = conn.prepareStatement("DELETE FROM compte where id=?");
-			ps.setInt(1,c.getId());
+			ps.setInt(1, c.getId());
 
 			ps.executeUpdate();
 
