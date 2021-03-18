@@ -104,7 +104,7 @@ public class Test {
 		System.out.println("2 - Face");
 		RandomPiece();
 		int choix = saisieInt("");
-		if (choix==RandomPiece())
+		if (choix==RandomPiece()) {
 			System.out.println("\n" + connected.getLogin() + " / " + connected.getPassword() + ", vous commencez\n");
 			// System.out.println("Vous commencez");
 			//System.out.println("Vous commencez");
@@ -116,7 +116,7 @@ public class Test {
 
 			LancerdeUser1();
 		}
-	}
+	
 
 	private static int RandomPiece() {
 		int rpiece=0;
