@@ -132,6 +132,24 @@ public class Test {
 		}
 		choixDifficulte();
 	}
+	
+	private static void rejouer() {
+
+		System.out.println("\nVoulez-vous rejouer ?");
+		System.out.println("1 - oui");
+		System.out.println("2 - non");
+		int choix = saisieInt("");
+
+		switch(choix) 
+		{
+		case 1 : choixDifficulte();break;
+		case 2 : menuPrincipal();break;
+		default : System.out.println("Choix impossible !\n");
+		}
+		
+
+	}
+	
 
 	// ======================================================================================================
 	// ======================================================================================================
@@ -370,31 +388,28 @@ public class Test {
 			System.out.println("PV j2 "+ia.getPointDeVie());
 			
 
-		}
+		} while (((User) u1).getPointDeVie() > 0 && ia.getPointDeVie() > 0);
 
-		while (((User) u1).getPointDeVie()>0 && ia.getPointDeVie()>0);
-
-		if (((User) u1).getPointDeVie()>ia.getPointDeVie() || ((User) u1).getPointDeVie()!=ia.getPointDeVie())
-		{
-			System.out.println("Fin du jeu, le joueur 1 a gagné la partie");
+		//=======================================================================
+		//======== Qui a gagné ?
+		
+		if (((User) u1).getPointDeVie() > 0 && ia.getPointDeVie() <= 0) {
+			
+			System.out.println("Fin du jeu, le joueur 1 a gagné la partie !");
 			ajoutLevel(u1);
-		}
-
-		else 
-		{
-			if (ia.getPointDeVie()>((User) u1).getPointDeVie() || ((User) u1).getPointDeVie()!=ia.getPointDeVie())
-			{
-				System.out.println("Fin du jeu, le joueur 2 a gagné la partie");
-			}
-			else {
-				if (ia.getPointDeVie()==((User) u1).getPointDeVie() )
-				{
-					System.out.println("Fin du jeu, égalité");
-				}
-			}
+			
+		} else if (ia.getPointDeVie() > 0 && ((User) u1).getPointDeVie() <= 0) {
+			
+			System.out.println("Fin du jeu, le joueur 2 a gagné la partie !");
+			
+		} else if (ia.getPointDeVie() <= 0 && ((User) u1).getPointDeVie() <= 0) {
+			
+			System.out.println("Fin du jeu, égalité !");
+			rejouer();
 		}
 	}
-
+	
+	// ======================================================================================================
 	public static void LancerdeUser1() {
 		// 1: Les joueurs
 		Compte u1 = new User(false, 20, 0, null);
@@ -648,31 +663,29 @@ public class Test {
 			System.out.println("PV j1 "+((User) u1).getPointDeVie());
 			System.out.println("PV j2 "+ia.getPointDeVie());
 			
-		}
+		} while (((User) u1).getPointDeVie() > 0 && ia.getPointDeVie() > 0);
 
-		while (((User) u1).getPointDeVie()>0 && ia.getPointDeVie()>0);
-
-		if (((User) u1).getPointDeVie()>ia.getPointDeVie() || ((User) u1).getPointDeVie()!=ia.getPointDeVie())
-		{
-			System.out.println("Fin du jeu, le joueur 1 a gagné la partie");
+		//=======================================================================
+		//======== Qui a gagné ?
+		
+		if (((User) u1).getPointDeVie() > 0 && ia.getPointDeVie() <= 0) {
+			
+			System.out.println("Fin du jeu, le joueur 1 a gagné la partie !");
 			ajoutLevel(u1);
-		}
-
-		else 
-		{
-			if (ia.getPointDeVie()>((User) u1).getPointDeVie() || ((User) u1).getPointDeVie()!=ia.getPointDeVie())
-			{
-				System.out.println("Fin du jeu, le joueur 2 a gagné la partie");
-			}
-			else {
-				if (ia.getPointDeVie()==((User) u1).getPointDeVie() )
-				{
-					System.out.println("Fin du jeu, égalité");
-				}
-			}
+			
+		} else if (ia.getPointDeVie() > 0 && ((User) u1).getPointDeVie() <= 0) {
+			
+			System.out.println("Fin du jeu, le joueur 2 a gagné la partie !");
+			
+		} else if (ia.getPointDeVie() <= 0 && ((User) u1).getPointDeVie() <= 0) {
+			
+			System.out.println("Fin du jeu, égalité !");
+			rejouer();
 		}
 
 	}
+	
+	// ============================================================================================================
 
 	static List<String> facesDes = Arrays.asList("casque", "bouclier", "fleche", "hache", "main", "casque+sort",
 			"bouclier+sort", "fleche+sort", "hache+sort", "main+sort");
