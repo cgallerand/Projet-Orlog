@@ -230,12 +230,12 @@ public class Test {
 					System.out.println(
 							listeU1L1Rel1.get(i).getId() + " : " + facesDes.get(listeU1L1Rel1.get(i).getSymbole()));
 				}
-
+				
 			} else {// le joueur fait le choix de tout garder
 				System.out.println("Vous avez choisi de tout garder !");
 				listeDeTotalU1 = listeU1L1;
 			}
-
+			
 			if (listeDeTotalU1.size() < 5) {
 
 				System.out.println("============================================\n");
@@ -296,8 +296,7 @@ public class Test {
 				.println(listeDeTotalU1.get(i).getId() + " : " + facesDes.get(listeDeTotalU1.get(i).getSymbole()));
 
 			}
-
-
+			
 			Roll r1 = new Roll();
 			r1.user = (User) u1;
 			for (De de : listeDeTotalU1) {
@@ -341,9 +340,22 @@ public class Test {
 
 				}	
 			}
+			
+			System.out.println("Point de sorts J1 "+r1.getSort());
+			System.out.println("Point de sorts J2 "+r2.getSort());
+			System.out.println(r1);
 			System.out.println(r2);
-
-
+			int psr1=r1.getSort()-r2.getMain();
+			int psr2=r2.getSort()-r1.getMain();
+			if (psr1<0 && psr2<0)
+			{
+				psr1=0;
+				psr2=0;
+			}
+			int psr3=psr1+r1.getSort();
+			int psr4=psr2+r2.getSort();
+			System.out.println("Point de sorts restants J1 "+psr3);
+			System.out.println("Point de sorts restants J2 "+psr4);
 			System.out.println("PV j1 "+((User) u1).getPointDeVie());
 			System.out.println("PV j2 "+ia.getPointDeVie());
 
@@ -352,6 +364,7 @@ public class Test {
 
 			System.out.println("PV j1 "+((User) u1).getPointDeVie());
 			System.out.println("PV j2 "+ia.getPointDeVie());
+			
 
 		}
 
@@ -562,7 +575,7 @@ public class Test {
 				.println(listeDeTotalU1.get(i).getId() + " : " + facesDes.get(listeDeTotalU1.get(i).getSymbole()));
 
 			}
-
+			
 
 			Roll r1 = new Roll();
 			r1.user = (User) u1;
@@ -584,8 +597,6 @@ public class Test {
 				}	
 			}
 
-
-			System.out.println();
 
 			//			List<De> listeUs = lancerDeUser(listeU2);
 			//			Roll r2 = new Roll();
@@ -612,12 +623,27 @@ public class Test {
 
 			System.out.println("PV j1 "+((User) u1).getPointDeVie());
 			System.out.println("PV j2 "+ia.getPointDeVie());
-
+			System.out.println("Point de sorts J1 "+r1.getSort());
+			System.out.println("Point de sorts J2 "+r2.getSort());
+			System.out.println(r1);
+			System.out.println(r2);
+			int psr1=r1.getSort()-r2.getMain();
+			int psr2=r2.getSort()-r1.getMain();
+			if (psr1<0 && psr2<0)
+			{
+				psr1=0;
+				psr2=0;
+			}
+			int psr3=psr1+r1.getSort();
+			int psr4=psr2+r2.getSort();
+			System.out.println("Point de sorts restants J1 "+psr3);
+			System.out.println("Point de sorts restants J2 "+psr4);
 			r1.combat(r2);
 
-
+			
 			System.out.println("PV j1 "+((User) u1).getPointDeVie());
 			System.out.println("PV j2 "+ia.getPointDeVie());
+			
 		}
 
 		while (((User) u1).getPointDeVie()>0 && ia.getPointDeVie()>0);
