@@ -539,9 +539,6 @@ public class Test {
 
 			int cptTotalSort = 0;		
 
-		do
-		{
-
 			// ============================================================
 			System.out.println("\t === Lancer1 ===\n");
 
