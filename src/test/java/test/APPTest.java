@@ -48,7 +48,12 @@ public class APPTest {
 	}
 	
 	public static void main(String[] args) {
+		
+		//Context.getInstance().getEmf().createEntityManager();
+		
 		connect();
+		
+		
 	}
 
 }
