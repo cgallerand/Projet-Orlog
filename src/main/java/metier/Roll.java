@@ -97,12 +97,18 @@ public class Roll {
 
 	@Override
 	public String toString() {
-		return casque + " casque(s),\n" +
-				bouclier + " bouclier(s),\n" +
-				fleche + " fleche(s),\n" +
-				hache + " hache(s),\n"+
-				main + " main(s),\n" +
-				sort + " sort(s)";
+		return "Roll [casque=" + casque + ", bouclier=" + bouclier + ", fleche=" + fleche + ", hache=" + hache
+				+ ", main=" + main + ", sort=" + sort + "]";
 	}
+
+//	@Override
+//	public String toString() {
+//		return casque + " casque(s),\n" +
+//				bouclier + " bouclier(s),\n" +
+//				fleche + " fleche(s),\n" +
+//				hache + " hache(s),\n"+
+//				main + " main(s),\n" +
+//				sort + " sort(s)";
+//	}
 
 }
