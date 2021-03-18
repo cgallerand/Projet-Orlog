@@ -67,30 +67,8 @@ public class Test {
 
 	}
 
-	private static void seConnecter() {
+	private static Compte seConnecter() {
 
-<<<<<<< HEAD
-
-		String login=saisieString("Saisir votre login");
-		String password=saisieString("Saisir votre password");
-		
-		Compte connected=Context.getInstance().getDaoCompte().checkConnect(login, password);
-		
-		Context.getInstance().setConnected(connected);
-		
-		if(connected==null) {System.out.println("Identifiants invalides");seConnecter();}
-		else {
-			if (connected instanceof Compte)
-			{
-				choixDifficulte();
-			}
-			else
-			{
-				System.out.println("Identifiants invalides \n");
-				seConnecter();
-			}
-
-=======
 		String login=saisieString("Saisir votre login");
 		String password=saisieString("Saisir votre password");
 		
@@ -105,8 +83,9 @@ public class Test {
 		{
 			System.out.println("Identifiants invalides \n");
 			seConnecter();
->>>>>>> develop
 		}
+		return connected;
+
 	}
 
 	private static void choixDifficulte() {
@@ -138,7 +117,6 @@ public class Test {
 		if (choix==RandomPiece()) {
 			System.out.println("\n" + connected.getLogin() + " / " + connected.getPassword() + ", vous commencez\n");
 			// System.out.println("Vous commencez");
-			//System.out.println("Vous commencez");
 
 			LancerdeUser2();
 		}
@@ -249,20 +227,20 @@ public class Test {
 			// on lance tous les dï¿½s du joueur
 			listeU1L1 = lancerDeUser(listeU1);
 			((User) u1).setDes(listeU1L1);// on attribut la liste de dï¿½ au premier joueur
-			System.out.println("Liste des Dés joueur 1:");// on affiche toutes les faces de dï¿½s du premier lancï¿½
+			System.out.println("Liste des Dï¿½s joueur 1:");// on affiche toutes les faces de dï¿½s du premier lancï¿½
 			for (De de : listeU1L1) {
 				System.out.println(de.getSymbole() + " : " + facesDes.get(de.getSymbole()));
 			}
 
-			System.out.println("\t === choix des dés ===");
+			System.out.println("\t === choix des dï¿½s ===");
 
 			// on demande au joueur si il veut choisir des dï¿½s
-			String choix = saisieString("Voulez-vous choisir des dés et relancer le reste ? (y/n)");
+			String choix = saisieString("Voulez-vous choisir des dï¿½s et relancer le reste ? (y/n)");
 			if (choix.equalsIgnoreCase("y")) {// le joueur fait le choix de garder seulement certains dï¿½s
 
 				listeU1L1C1 = choisirDeUser(listeU1L1);// on appelle la mï¿½thode choisirDeUser() pour choisir les dï¿½s ï¿½
 				// garder
-				System.out.println("Les dés choisis sont (" + listeU1L1C1.size() + "):");
+				System.out.println("Les dï¿½s choisis sont (" + listeU1L1C1.size() + "):");
 				for (int i = 0; i < listeU1L1C1.size(); i++) {// on affiche tous les dï¿½s qui ont ï¿½tï¿½ choisis
 					System.out.println(listeU1L1C1.get(i).getId() + " : " + facesDes.get(listeU1L1C1.get(i).getSymbole()));
 				}
@@ -270,7 +248,7 @@ public class Test {
 
 				listeU1L1Rel1 = choisirDeARelancer(listeU1L1, listeU1L1C1);// on appelle la mï¿½thode choisirDeARelancer()
 				// pour stocker les dï¿½s ï¿½ relancer
-				System.out.println("Les dés à relancer sont (" + listeU1L1Rel1.size() + "):");
+				System.out.println("Les dï¿½s ï¿½ relancer sont (" + listeU1L1Rel1.size() + "):");
 				System.out.println(listeU1L1Rel1.size());
 				for (int i = 0; i < listeU1L1Rel1.size(); i++) {
 					System.out.println(
@@ -288,7 +266,7 @@ public class Test {
 				System.out.println("\t === Lancer2 ===\n");
 
 				listeU1L2 = lancerDeUser(listeU1L1Rel1);
-				System.out.println("Liste des Dés à relancer joueur 1:");
+				System.out.println("Liste des Dï¿½s ï¿½ relancer joueur 1:");
 				for (De de : listeU1L2) {
 					System.out.println(de.getSymbole() + " : " + facesDes.get(de.getSymbole()));
 				}
@@ -296,11 +274,11 @@ public class Test {
 				System.out.println("\t === Lancer2 - choix des dï¿½s ===");
 
 				// on demande au joueur si il veut choisir des dï¿½s
-				String choix1 = saisieString("Voulez-vous choisir des dés et relancer le reste ? (y/n)");
+				String choix1 = saisieString("Voulez-vous choisir des dï¿½s et relancer le reste ? (y/n)");
 				if (choix1.equalsIgnoreCase("y")) {
 
 					listeU1L2C2 = choisirDeUser(listeU1L2);
-					System.out.println("Les dés choisis sont (" + listeU1L2C2.size() + "):");
+					System.out.println("Les dï¿½s choisis sont (" + listeU1L2C2.size() + "):");
 					for (int i = 0; i < listeU1L2C2.size(); i++) {
 						System.out.println(
 								listeU1L2C2.get(i).getId() + " : " + facesDes.get(listeU1L2C2.get(i).getSymbole()));
@@ -308,7 +286,7 @@ public class Test {
 					listeDeTotalU1.addAll(listeU1L2C2);
 
 					listeU1L2Rel2 = choisirDeARelancer(listeU1L2, listeU1L2C2);
-					System.out.println("Les dés à relancer sont (" + listeU1L2Rel2.size() + "):");
+					System.out.println("Les dï¿½s ï¿½ relancer sont (" + listeU1L2Rel2.size() + "):");
 					for (int i = 0; i < listeU1L2Rel2.size(); i++) {
 						System.out.println(
 								listeU1L2Rel2.get(i).getId() + " : " + facesDes.get(listeU1L2Rel2.get(i).getSymbole()));
@@ -324,7 +302,7 @@ public class Test {
 					System.out.println("\t === Lancer3 ===\n");
 
 					listeU1L3 = lancerDeUser(listeU1L2Rel2);
-					System.out.println("Liste des Dés à relancer joueur 1:");
+					System.out.println("Liste des Dï¿½s ï¿½ relancer joueur 1:");
 					for (De de : listeU1L3) {
 						System.out.println(de.getSymbole() + " : " + facesDes.get(de.getSymbole()));
 					}
@@ -419,6 +397,7 @@ public class Test {
 		if (((User) u1).getPointDeVie()>ia.getPointDeVie() || ((User) u1).getPointDeVie()!=ia.getPointDeVie())
 		{
 			System.out.println("Fin du jeu, le joueur 1 a gagnï¿½ la partie");
+			ajoutLevel(u1);
 		}
 
 		else 
@@ -534,15 +513,15 @@ public class Test {
 
 			listeU1L1 = lancerDeUser(listeU1);
 			((User) u1).setDes(listeU1L1);// on attribut la liste de dï¿½ au premier joueur
-			System.out.println("Liste des Dés joueur 1:");// on affiche toutes les faces de dï¿½s du premier lancï¿½
+			System.out.println("Liste des Dï¿½s joueur 1:");// on affiche toutes les faces de dï¿½s du premier lancï¿½
 			for (De de : listeU1L1) {
 				System.out.println(de.getSymbole() + " : " + facesDes.get(de.getSymbole()));
 			}
 
-			System.out.println("\t === Lancer1 - choix des dés ===");
+			System.out.println("\t === Lancer1 - choix des dï¿½s ===");
 
 			// on demande au joueur si il veut choisir des dï¿½s
-			String choix = saisieString("Voulez-vous choisir des dés et relancer le reste ? (y/n)");
+			String choix = saisieString("Voulez-vous choisir des dï¿½s et relancer le reste ? (y/n)");
 			if (choix.equalsIgnoreCase("y")) {// le joueur fait le choix de garder seulement certains dï¿½s
 
 				listeU1L1C1 = choisirDeUser(listeU1L1);// on appelle la mï¿½thode choisirDeUser() pour choisir les dï¿½s ï¿½
@@ -555,7 +534,7 @@ public class Test {
 
 				listeU1L1Rel1 = choisirDeARelancer(listeU1L1, listeU1L1C1);// on appelle la mï¿½thode choisirDeARelancer()
 				// pour stocker les dï¿½s ï¿½ relancer
-				System.out.println("Les dés à relancer sont (" + listeU1L1Rel1.size() + "):");
+				System.out.println("Les dï¿½s ï¿½ relancer sont (" + listeU1L1Rel1.size() + "):");
 				System.out.println(listeU1L1Rel1.size());
 				for (int i = 0; i < listeU1L1Rel1.size(); i++) {
 					System.out.println(
@@ -573,7 +552,7 @@ public class Test {
 				System.out.println("\t === Lancer2 ===\n");
 
 				listeU1L2 = lancerDeUser(listeU1L1Rel1);
-				System.out.println("Liste des Dés à relancer joueur 1:");
+				System.out.println("Liste des Dï¿½s ï¿½ relancer joueur 1:");
 				for (De de : listeU1L2) {
 					System.out.println(de.getSymbole() + " : " + facesDes.get(de.getSymbole()));
 				}
@@ -585,7 +564,7 @@ public class Test {
 				if (choix1.equalsIgnoreCase("y")) {
 
 					listeU1L2C2 = choisirDeUser(listeU1L2);
-					System.out.println("Les dés choisis sont (" + listeU1L2C2.size() + "):");
+					System.out.println("Les dï¿½s choisis sont (" + listeU1L2C2.size() + "):");
 					for (int i = 0; i < listeU1L2C2.size(); i++) {
 						System.out.println(
 								listeU1L2C2.get(i).getId() + " : " + facesDes.get(listeU1L2C2.get(i).getSymbole()));
@@ -593,7 +572,7 @@ public class Test {
 					listeDeTotalU1.addAll(listeU1L2C2);
 
 					listeU1L2Rel2 = choisirDeARelancer(listeU1L2, listeU1L2C2);
-					System.out.println("Les dés à relancer sont (" + listeU1L2Rel2.size() + "):");
+					System.out.println("Les dï¿½s ï¿½ relancer sont (" + listeU1L2Rel2.size() + "):");
 					for (int i = 0; i < listeU1L2Rel2.size(); i++) {
 						System.out.println(
 								listeU1L2Rel2.get(i).getId() + " : " + facesDes.get(listeU1L2Rel2.get(i).getSymbole()));
@@ -609,7 +588,7 @@ public class Test {
 					System.out.println("\t === Lancer3 ===\n");
 
 					listeU1L3 = lancerDeUser(listeU1L2Rel2);
-					System.out.println("Liste des Dés à relancer joueur 1:");
+					System.out.println("Liste des Dï¿½s ï¿½ relancer joueur 1:");
 					for (De de : listeU1L3) {
 						System.out.println(de.getSymbole() + " : " + facesDes.get(de.getSymbole()));
 					}
@@ -702,6 +681,7 @@ public class Test {
 		if (((User) u1).getPointDeVie()>ia.getPointDeVie() || ((User) u1).getPointDeVie()!=ia.getPointDeVie())
 		{
 			System.out.println("Fin du jeu, le joueur 1 a gagnï¿½ la partie");
+			ajoutLevel(u1);
 		}
 
 		else 
@@ -810,16 +790,10 @@ public class Test {
 
 	// ============================================================================================================
 
-	public static void ajoutLevel(boolean victoire) {
+	public static void ajoutLevel(Compte c) {
 
-		ut.setId(connected.getId());
-		int i = ut.getLevel();
-
-		if (victoire) {
-			i++;
-			ut.setLevel(i);
-			Context.getInstance().getDaoUtilisateur().save(ut);
-		}
+		ut.setLevel(Context.getInstance().getDaoUtilisateur().findById(c.getId()).getLevel()+1);
+		Context.getInstance().getDaoUtilisateur().save(ut);
 
 	}
 
