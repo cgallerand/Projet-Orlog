@@ -394,17 +394,17 @@ public class Test {
 
 				}
 			}
-
-			System.out.println("Point de sorts J1 " + r1.getSort());
-			System.out.println("Point de sorts J2 " + r2.getSort());
+			System.out.println("PV j1 " + ((User) u1).getPointDeVie());
+			System.out.println("PV j2 " + ia.getPointDeVie());
+			System.out.println("============================================");
+			System.out.println("Point de sorts J1 " + ptSortJ1Total);
+			System.out.println("Point de sorts J2 " + ptSortJ2Total);
+			System.out.println("============================================");
 			System.out.println(r1);
 			System.out.println(r2);
 			ptSortJ1Total += r1.getSort();
 			ptSortJ2Total += r2.getSort();
-			System.out.println(r1);
-
-			System.out.println(r2);
-
+			
 			int diff = r1.getMain() - r2.getMain();
 			if (diff > 0) {
 				if (ptSortJ2Total > diff) {
@@ -441,11 +441,18 @@ public class Test {
 
 				} else if (diff == 0) {
 				}
-				r1.combat(r2);
-
-				System.out.println("PV j1 " + ((User) u1).getPointDeVie());
-				System.out.println("PV j2 " + ia.getPointDeVie());
+				
 			}
+//			coucou
+			System.out.println("============================================");
+			System.out.println("Point de sorts J1 " + ptSortJ1Total);
+			System.out.println("Point de sorts J2 " + ptSortJ2Total);
+			System.out.println("============================================");
+			r1.combat(r2);
+			System.out.println("============================================");
+			System.out.println("PV j1 " + ((User) u1).getPointDeVie());
+			System.out.println("PV j2 " + ia.getPointDeVie());
+			System.out.println("============================================");
 
 		} while (((User) u1).getPointDeVie() > 0 && ia.getPointDeVie() > 0);
 
