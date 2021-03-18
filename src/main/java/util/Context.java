@@ -17,7 +17,7 @@ public class Context {
 	private static Context _instance = null;
 	private Compte connected = null;
 	private IDAOCompte daoCompte = new DAOCompteJPA();
-	// private IDAOCompte daoCompte = new DAOCompteJDBC();
+	//private IDAOCompte daoCompte = new DAOCompteJDBC();
 	private IDAOSort daoSort = new DAOSortJPA();
 	// private IDAOSort daoSort = new DAOSortJDBC();
 	private IDAOUtilisateur daoUtilisateur = new DAOUtilisateurJPA();
@@ -78,5 +78,13 @@ public class Context {
 	public void setDaoUtilisateur(IDAOUtilisateur daoUtilisateur) {
 		this.daoUtilisateur = daoUtilisateur;
 	}
+	
+
+	public void setConnected(Compte connected) {
+		this.connected = connected;
+	}
+
+
+	
 
 }

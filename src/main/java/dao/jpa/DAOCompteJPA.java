@@ -54,11 +54,11 @@ public class DAOCompteJPA implements IDAOCompte {
 	}
 
 	@Override
-	public Compte checkConnect(String log, String pass)
+	public Compte checkConnect(String log,String pass)
 	{ 
+		
 		try {
 		EntityManager em = Context.getInstance().getEmf().createEntityManager();
-		
 		Query query = em.createQuery("from Compte c where c.login= :l and c.password= :p", Compte.class); 
 		query.setParameter("l", log);
 		query.setParameter("p", pass);

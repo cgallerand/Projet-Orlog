@@ -10,13 +10,13 @@ import java.util.Scanner;
 import metier.Compte;
 import metier.De;
 import metier.Roll;
-import dao.jpa.DAOCompteJPA;
 import metier.User;
+import util.Context;
 
 public class Test {
 
-	static DAOCompteJPA daoCompte= new DAOCompteJPA();//a enlever
-	static Compte compteConnected;//a enlever
+//	static DAOCompteJPA daoCompte= new DAOCompteJPA();//a enlever
+//	static Compte compteConnected;//a enlever
 
 	public static String saisieString(String message) 
 	{
@@ -59,23 +59,27 @@ public class Test {
 
 	private static void seConnecter() {
 
-		compteConnected=null;
 
 		String login=saisieString("Saisir votre login");
 		String password=saisieString("Saisir votre password");
-		compteConnected=daoCompte.checkConnect(login,password);
+		
+		Compte connected=Context.getInstance().getDaoCompte().checkConnect(login, password);
+		
+		Context.getInstance().setConnected(connected);
+		
+		if(connected==null) {System.out.println("Identifiants invalides");seConnecter();}
+		else {
+			if (connected instanceof Compte)
+			{
+				choixDifficulte();
+			}
+			else
+			{
+				System.out.println("Identifiants invalides \n");
+				seConnecter();
+			}
 
-		if (compteConnected instanceof Compte)
-		{
-
-			choixDifficulte();
 		}
-		else
-		{
-			System.out.println("Identifiants invalides \n");
-			seConnecter();
-		}
-
 	}
 
 	private static void choixDifficulte() {
@@ -135,9 +139,10 @@ public class Test {
 
 	public static void LancerdeUser2() {
 		// 1: Les joueurs
-		User u1 = new User(1, false, 20, 0, null);
-		User u2 = new User(2, false, 20, 0, null);
-		User ia = new User(3, false, 20, 0, null);
+		User u1 = new User(1, "Jordan", "ajc", false, 20, 0, null);
+
+		User u2 = new User(2, null, null, false, 20, 0, null);
+		User ia = new User(3, null, null, false, 20, 0, null);
 
 		// création d'un liste des dé pour le joueur 1
 		List<De> listeU1 = new ArrayList<De>();
@@ -377,9 +382,9 @@ public class Test {
 
 	public static void LancerdeUser1() {
 		// 1: Les joueurs
-		User u1 = new User(1, false, 20, 0, null);
-		User u2 = new User(2, false, 20, 0, null);
-		User ia = new User(3, false, 20, 0, null);
+		User u1 = new User(1, "Jordan", "ajc", false, 20, 0, null);
+		User u2 = new User(2, null, null, false, 20, 0, null);
+		User ia = new User(3, null, null, false, 20, 0, null);
 
 		// création d'un liste des dé pour le joueur 1
 		List<De> listeU1 = new ArrayList<De>();
