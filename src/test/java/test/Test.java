@@ -10,13 +10,12 @@ import java.util.Scanner;
 import metier.Compte;
 import metier.De;
 import metier.Roll;
-import dao.jpa.DAOCompteJPA;
 import metier.User;
+import util.Context;
 
 public class Test {
-
-	static DAOCompteJPA daoCompte= new DAOCompteJPA();//a enlever
-	static Compte compteConnected;//a enlever
+	
+	static Compte connected = null;
 
 	public static String saisieString(String message) 
 	{
@@ -59,15 +58,14 @@ public class Test {
 
 	private static void seConnecter() {
 
-		compteConnected=null;
-
 		String login=saisieString("Saisir votre login");
 		String password=saisieString("Saisir votre password");
-		compteConnected=daoCompte.checkConnect(login,password);
+		
+		connected = Context.getInstance().getDaoCompte().checkConnect(login,password);
 
-		if (compteConnected instanceof Compte)
+		if (connected instanceof Compte)
 		{
-
+			System.out.println("Bienvenu " + connected.getLogin() + " / " + connected.getPassword() + " !");
 			choixDifficulte();
 		}
 		else
@@ -106,7 +104,8 @@ public class Test {
 		int choix = saisieInt("");
 		if (choix==RandomPiece())
 		{
-			System.out.println("Vous commencez");
+			System.out.println(connected.getLogin() + " / " + connected.getPassword() + ", vous commencez");
+			//System.out.println("Vous commencez");
 
 			LancerdeUser2();
 		}
@@ -135,23 +134,26 @@ public class Test {
 
 	public static void LancerdeUser2() {
 		// 1: Les joueurs
-		User u1 = new User(1, false, 20, 0, null);
-		User u2 = new User(2, false, 20, 0, null);
-		User ia = new User(3, false, 20, 0, null);
+		Compte u1 = new User(false, 20, 0, null);
+		u1.setId(connected.getId());
+		//Compte u2 = new User(false, 20, 0, null);
+		//u2.setId();
+		User ia = new User(true, 20, 0, null);
+		ia.setId(3);;
 
 		// création d'un liste des dé pour le joueur 1
 		List<De> listeU1 = new ArrayList<De>();
-		De d1 = new De(1, null, u1);// => faire un random à partir de De1
+		De d1 = new De(1, null, (User) u1);// => faire un random à partir de De1
 		listeU1.add(d1);
-		De d2 = new De(2, null, u1);// => faire un random à partir de De2
+		De d2 = new De(2, null, (User) u1);// => faire un random à partir de De2
 		listeU1.add(d2);
-		De d3 = new De(3, null, u1);// => faire un random à partir de De3
+		De d3 = new De(3, null, (User) u1);// => faire un random à partir de De3
 		listeU1.add(d3);
-		De d4 = new De(4, null, u1);// => faire un random à partir de De4
+		De d4 = new De(4, null, (User) u1);// => faire un random à partir de De4
 		listeU1.add(d4);
-		De d5 = new De(5, null, u1);// => faire un random à partir de De5
+		De d5 = new De(5, null, (User) u1);// => faire un random à partir de De5
 		listeU1.add(d5);
-		De d6 = new De(6, null, u1);// => faire un random à partir de De6
+		De d6 = new De(6, null, (User) u1);// => faire un random à partir de De6
 		listeU1.add(d6);
 
 		// user2 ou IA
@@ -200,7 +202,7 @@ public class Test {
 
 			// on lance tous les dés du joueur
 			listeU1L1 = lancerDeUser(listeU1);
-			u1.setDes(listeU1L1);// on attribut la liste de dé au premier joueur
+			((User) u1).setDes(listeU1L1);// on attribut la liste de dé au premier joueur
 			System.out.println("Liste des Dés joueur 1:");// on affiche toutes les faces de dés du premier lancé
 			for (De de : listeU1L1) {
 				System.out.println(de.getSymbole() + " : " + facesDes.get(de.getSymbole()));
@@ -287,7 +289,7 @@ public class Test {
 			}
 			System.out.println("============================================\n");
 			System.out.println("\t === Infos global joueur ===\n");
-			System.out.println("Le joueur1 a " + u1.getPointDeVie() + " point de vie");
+			System.out.println("Le joueur1 a " + ((User) u1).getPointDeVie() + " point de vie");
 			System.out.println("Le joueur1 a choisi ces faces de dé :");
 			for (int i = 0; i < listeDeTotalU1.size(); i++) {
 				System.out
@@ -297,7 +299,7 @@ public class Test {
 
 
 			Roll r1 = new Roll();
-			r1.user = u1;
+			r1.user = (User) u1;
 			for (De de : listeDeTotalU1) {
 				int val = de.getSymbole();
 				switch (val) {
@@ -321,7 +323,7 @@ public class Test {
 
 			List<De> listeUs = lancerDeUser(listeU2);
 			Roll r2 = new Roll();
-			r2.user = u2;
+			r2.user = ia;
 			for (De de : listeUs) {
 				int val = de.getSymbole();
 				switch (val) {
@@ -342,32 +344,32 @@ public class Test {
 			System.out.println(r2);
 
 
-			System.out.println("PV j1 "+u1.getPointDeVie());
-			System.out.println("PV j2 "+u2.getPointDeVie());
+			System.out.println("PV j1 "+((User) u1).getPointDeVie());
+			System.out.println("PV j2 "+ia.getPointDeVie());
 
 			r1.combat(r2);
 
 
-			System.out.println("PV j1 "+u1.getPointDeVie());
-			System.out.println("PV j2 "+u2.getPointDeVie());
+			System.out.println("PV j1 "+((User) u1).getPointDeVie());
+			System.out.println("PV j2 "+ia.getPointDeVie());
 
 		}
 
-		while (u1.getPointDeVie()>0 && u2.getPointDeVie()>0);
+		while (((User) u1).getPointDeVie()>0 && ia.getPointDeVie()>0);
 
-		if (u1.getPointDeVie()>u2.getPointDeVie() || u1.getPointDeVie()!=u2.getPointDeVie())
+		if (((User) u1).getPointDeVie()>ia.getPointDeVie() || ((User) u1).getPointDeVie()!=ia.getPointDeVie())
 		{
 			System.out.println("Fin du jeu, le joueur 1 a gagné la partie");
 		}
 
 		else 
 		{
-			if (u2.getPointDeVie()>u1.getPointDeVie() || u1.getPointDeVie()!=u2.getPointDeVie())
+			if (ia.getPointDeVie()>((User) u1).getPointDeVie() || ((User) u1).getPointDeVie()!=ia.getPointDeVie())
 			{
 				System.out.println("Fin du jeu, le joueur 2 a gagné la partie");
 			}
 			else {
-				if (u2.getPointDeVie()==u1.getPointDeVie() )
+				if (ia.getPointDeVie()==((User) u1).getPointDeVie() )
 				{
 					System.out.println("Fin du jeu, égalité");
 				}
@@ -377,23 +379,26 @@ public class Test {
 
 	public static void LancerdeUser1() {
 		// 1: Les joueurs
-		User u1 = new User(1, false, 20, 0, null);
-		User u2 = new User(2, false, 20, 0, null);
-		User ia = new User(3, false, 20, 0, null);
+		Compte u1 = new User(false, 20, 0, null);
+		u1.setId(connected.getId());
+		//Compte u2 = new User(false, 20, 0, null);
+		//u2.setId();
+		User ia = new User(true, 20, 0, null);
+		ia.setId(3);;
 
 		// création d'un liste des dé pour le joueur 1
 		List<De> listeU1 = new ArrayList<De>();
-		De d1 = new De(1, null, u1);// => faire un random à partir de De1
+		De d1 = new De(1, null, (User) u1);// => faire un random à partir de De1
 		listeU1.add(d1);
-		De d2 = new De(2, null, u1);// => faire un random à partir de De2
+		De d2 = new De(2, null, (User) u1);// => faire un random à partir de De2
 		listeU1.add(d2);
-		De d3 = new De(3, null, u1);// => faire un random à partir de De3
+		De d3 = new De(3, null, (User) u1);// => faire un random à partir de De3
 		listeU1.add(d3);
-		De d4 = new De(4, null, u1);// => faire un random à partir de De4
+		De d4 = new De(4, null, (User) u1);// => faire un random à partir de De4
 		listeU1.add(d4);
-		De d5 = new De(5, null, u1);// => faire un random à partir de De5
+		De d5 = new De(5, null, (User) u1);// => faire un random à partir de De5
 		listeU1.add(d5);
-		De d6 = new De(6, null, u1);// => faire un random à partir de De6
+		De d6 = new De(6, null, (User) u1);// => faire un random à partir de De6
 		listeU1.add(d6);
 
 		// user2 ou IA
@@ -442,7 +447,7 @@ public class Test {
 			// on lance tous les dés du joueur
 			List<De> listeUs = lancerDeUser(listeU2);
 			Roll r2 = new Roll();
-			r2.user = u2;
+			r2.user = ia;
 			for (De de : listeUs) {
 				int val = de.getSymbole();
 				switch (val) {
@@ -463,7 +468,7 @@ public class Test {
 			System.out.println("Le joueur 2 a choisit \n\n"+r2+"\n\n");
 
 			listeU1L1 = lancerDeUser(listeU1);
-			u1.setDes(listeU1L1);// on attribut la liste de dé au premier joueur
+			((User) u1).setDes(listeU1L1);// on attribut la liste de dé au premier joueur
 			System.out.println("Liste des Dés joueur 1:");// on affiche toutes les faces de dés du premier lancé
 			for (De de : listeU1L1) {
 				System.out.println(de.getSymbole() + " : " + facesDes.get(de.getSymbole()));
@@ -550,7 +555,7 @@ public class Test {
 			}
 			System.out.println("============================================\n");
 			System.out.println("\t === Infos global joueur ===\n");
-			System.out.println("Le joueur1 a " + u1.getPointDeVie() + " point de vie");
+			System.out.println("Le joueur1 a " + ((User) u1).getPointDeVie() + " point de vie");
 			System.out.println("Le joueur1 a choisi ces faces de dé :");
 			for (int i = 0; i < listeDeTotalU1.size(); i++) {
 				System.out
@@ -560,7 +565,7 @@ public class Test {
 
 
 			Roll r1 = new Roll();
-			r1.user = u1;
+			r1.user = (User) u1;
 			for (De de : listeDeTotalU1) {
 				int val = de.getSymbole();
 				switch (val) {
@@ -605,31 +610,31 @@ public class Test {
 			//			System.out.println(r2);
 
 
-			System.out.println("PV j1 "+u1.getPointDeVie());
-			System.out.println("PV j2 "+u2.getPointDeVie());
+			System.out.println("PV j1 "+((User) u1).getPointDeVie());
+			System.out.println("PV j2 "+ia.getPointDeVie());
 
 			r1.combat(r2);
 
 
-			System.out.println("PV j1 "+u1.getPointDeVie());
-			System.out.println("PV j2 "+u2.getPointDeVie());
+			System.out.println("PV j1 "+((User) u1).getPointDeVie());
+			System.out.println("PV j2 "+ia.getPointDeVie());
 		}
 
-		while (u1.getPointDeVie()>0 && u2.getPointDeVie()>0);
+		while (((User) u1).getPointDeVie()>0 && ia.getPointDeVie()>0);
 
-		if (u1.getPointDeVie()>u2.getPointDeVie() || u1.getPointDeVie()!=u2.getPointDeVie())
+		if (((User) u1).getPointDeVie()>ia.getPointDeVie() || ((User) u1).getPointDeVie()!=ia.getPointDeVie())
 		{
 			System.out.println("Fin du jeu, le joueur 1 a gagné la partie");
 		}
 
 		else 
 		{
-			if (u2.getPointDeVie()>u1.getPointDeVie() || u1.getPointDeVie()!=u2.getPointDeVie())
+			if (ia.getPointDeVie()>((User) u1).getPointDeVie() || ((User) u1).getPointDeVie()!=ia.getPointDeVie())
 			{
 				System.out.println("Fin du jeu, le joueur 2 a gagné la partie");
 			}
 			else {
-				if (u2.getPointDeVie()==u1.getPointDeVie() )
+				if (ia.getPointDeVie()==((User) u1).getPointDeVie() )
 				{
 					System.out.println("Fin du jeu, égalité");
 				}
