@@ -10,12 +10,26 @@ import dao.jpa.DAOCompteJPA;
 import dao.jpa.DAOSortJPA;
 import dao.jpa.DAOUtilisateurJPA;
 import metier.Compte;
+import metier.User;
+import metier.Utilisateur;
 
 public class Context {
 
+	//============= Connexion à la BDD
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("orlog");
+	
+	//======================================
 	private static Context _instance = null;
+	//======================================
+	
+	//============= Stockage des variables	
 	private Compte connected = null;
+	private Utilisateur ut = Context.getInstance().getDaoUtilisateur().findById(connected.getId());
+	private User u1 = null;
+	private Integer choixDifficulte = null;
+	private Integer quiCommence = null;
+	
+	//============= DAO
 	private IDAOCompte daoCompte = new DAOCompteJPA();
 	// private IDAOCompte daoCompte = new DAOCompteJDBC();
 	private IDAOSort daoSort = new DAOSortJPA();

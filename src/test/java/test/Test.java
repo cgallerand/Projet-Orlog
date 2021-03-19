@@ -150,7 +150,7 @@ public class Test {
 			System.out.println("\n" + connected.getLogin() + " / " + connected.getPassword() + ", vous commencez\n");
 			// System.out.println("Vous commencez");
 
-			IADifficileUser2();
+			IADifficileUser1();
 		}
 		System.out.println("\nL'adversaire commence\n");
 
