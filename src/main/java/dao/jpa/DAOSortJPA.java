@@ -52,6 +52,14 @@ public class DAOSortJPA implements IDAOSort {
 		em.close();
 		
 	}
+	
+	@Override
+	public List<Sort> findUntil(int level) {
+		EntityManager em = Context.getInstance().getEmf().createEntityManager();
+		Query query = em.createQuery("SELECT s from Sort s where s.niveau<=:level",Sort.class);
+		query.setParameter("level", level);
+		 return query.getResultList(); 
+	}
 
 
 	//Propre au JDBC
