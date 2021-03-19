@@ -6,15 +6,15 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("utilisateur")
 public class Utilisateur extends Compte {
-	
+
 	private Integer level;
 
 	public Utilisateur() {
 	}
 
-	public Utilisateur(int id, String login, String password, int level) {
-		super(id,login,password);
-		this.level=level;
+	public Utilisateur(String login, String password, int level) {
+		super(login, password);
+		this.level = level;
 	}
 
 	public int getLevel() {
@@ -24,6 +24,10 @@ public class Utilisateur extends Compte {
 	public void setLevel(Integer level) {
 		this.level = level;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Utilisateur [level=" + level + ", id=" + id + ", login=" + login + ", password=" + password + "]";
+	}
 
 }

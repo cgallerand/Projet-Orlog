@@ -3,10 +3,14 @@ package test;
 import java.util.Scanner;
 
 import metier.Compte;
+import metier.User;
 import metier.Utilisateur;
 import util.Context;
 
 public class APPTest {
+
+	static Compte connected = null;
+	static Utilisateur ut = new Utilisateur();
 	
 	public static String saisieString(String message) 
 	{
@@ -29,7 +33,7 @@ public class APPTest {
 		return sc.nextInt();
 	}
 	
-	public static void connect() {
+	public static Compte connect() {
 		String login=saisieString("Saisir votre login");
 		String password=saisieString("Saisir votre password");
 
@@ -39,16 +43,37 @@ public class APPTest {
 		
 		if(connected==null) {System.out.println("Identifiants invalides");}
 		else {
-			if(connected instanceof Utilisateur) {
+			if(connected instanceof Compte) {
 				System.out.println("Identifiant valide");
 			}
 			
 			else {System.out.println("Error type de compte");}
 		}
+		return connected;
 	}
 	
 	public static void main(String[] args) {
-		connect();
+		
+		//Context.getInstance().getEmf().createEntityManager();
+		
+		Compte c = connect();
+//		
+//		Compte u1 = new User(false, 20, 0, null);
+//		Compte ut = new Utilisateur();
+//		
+//		u1.setId(c.getId());
+//		System.out.println(u1);
+//		
+//		ut.setId(c.getId());
+//		System.out.println(ut);
+		
+		ut = Context.getInstance().getDaoUtilisateur().findById(c.getId());
+		System.out.println(ut);
+		ut.setLevel(ut.getLevel()+1);
+		
+		Context.getInstance().getDaoUtilisateur().save(ut);
+		System.out.println(Context.getInstance().getDaoUtilisateur().findById(c.getId()));
+		
 	}
 
 }

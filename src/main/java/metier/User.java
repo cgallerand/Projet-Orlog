@@ -34,14 +34,6 @@ public class User extends Compte {
 		this.des = des;
 	}
 
-	public User(int id, String login, String password, boolean ia, int pointDeVie, int pointDeSort, List<De> des) {
-		super(id, login, password);
-		this.ia = ia;
-		this.pointDeVie = pointDeVie;
-		this.pointDeSort = pointDeSort;
-		this.des = des;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -84,8 +76,8 @@ public class User extends Compte {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", ia=" + ia + ", pointDeVie=" + pointDeVie + ", pointDeSort=" + pointDeSort
-				+ ", des=" + des + "]";
+		return "User [ia=" + ia + ", pointDeVie=" + pointDeVie + ", pointDeSort=" + pointDeSort + ", des=" + des
+				+ ", id=" + id + ", login=" + login + ", password=" + password + "]";
 	}
 
 }
