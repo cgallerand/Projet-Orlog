@@ -14,12 +14,16 @@ public class User extends Compte {
 		super();
 	}
 
+	public User(int id) {
+		super(id);
+	}
+
 	public User(String login, String password) {
 		super(login, password);
 	}
 
-	public User(boolean ia, int pointDeVie, int pointDeSort, List<De> des) {
-		super();
+	public User(int id, boolean ia, int pointDeVie, int pointDeSort, List<De> des) {
+		super(id);
 		this.ia = ia;
 		this.pointDeVie = pointDeVie;
 		this.pointDeSort = pointDeSort;
