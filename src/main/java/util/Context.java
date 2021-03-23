@@ -10,16 +10,26 @@ import dao.jpa.DAOCompteJPA;
 import dao.jpa.DAOSortJPA;
 import dao.jpa.DAOUtilisateurJPA;
 import metier.Compte;
+import metier.User;
+import metier.Utilisateur;
 
 public class Context {
 
+	//============= Connexion � la BDD
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("orlog");
+	
+	//======================================
 	private static Context _instance = null;
+	//======================================
+	
+	//============= Initialisation des variables	
 	private Compte connected = null;
+	private Integer choixDifficulte = null;
+	private Integer quiCommence = null;
+	
+	//============= DAO
 	private IDAOCompte daoCompte = new DAOCompteJPA();
-	// private IDAOCompte daoCompte = new DAOCompteJDBC();
 	private IDAOSort daoSort = new DAOSortJPA();
-	// private IDAOSort daoSort = new DAOSortJDBC();
 	private IDAOUtilisateur daoUtilisateur = new DAOUtilisateurJPA();
 
 	// ================================================================
@@ -78,5 +88,24 @@ public class Context {
 	public void setDaoUtilisateur(IDAOUtilisateur daoUtilisateur) {
 		this.daoUtilisateur = daoUtilisateur;
 	}
+
+	// ================================================
+	public Integer getChoixDifficulte() {
+		return choixDifficulte;
+	}
+
+	public void setChoixDifficulte(Integer choixDifficulte) {
+		this.choixDifficulte = choixDifficulte;
+	}
+
+	// ================================================
+	public Integer getQuiCommence() {
+		return quiCommence;
+	}
+
+	public void setQuiCommence(Integer quiCommence) {
+		this.quiCommence = quiCommence;
+	}
+	
 
 }

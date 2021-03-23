@@ -30,6 +30,11 @@ public abstract class Compte {
 	public Compte() {
 	}
 
+	public Compte(int id) {
+		super();
+		this.id = id;
+	}
+
 	public Compte(String login, String password) {
 		super();
 		this.login = login;
