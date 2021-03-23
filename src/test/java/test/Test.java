@@ -552,6 +552,7 @@ public class Test {
 			System.out.println("PV j2 " + ia.getPointDeVie());
 			System.out.println("============================================");
 
+			//vjhbekjvhbekjhbvje
 			String SortSpecial = saisieString("Voulez vous utiliser une attaque sp�ciale ? (y/n)");
 			Utilisateur u = (Utilisateur) Context.getInstance().getConnected();
 			List<Sort> totalSortsDispo = Context.getInstance().getDaoSort().findUntil(u.getLevel()); 
